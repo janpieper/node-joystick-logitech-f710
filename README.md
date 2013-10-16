@@ -70,7 +70,7 @@ Joystick.create("/dev/input/js0", function (joystick) {
 #### Example
 
 ````javascript
-joystick.on("button:start:pressed", function () {
+joystick.on("button:start:press", function () {
   console.log("start button has been pressed");
 });
 ````
