@@ -23,12 +23,14 @@
   "main": "index",
   "dependencies": {},
   "devDependencies": {
-    "jasmine-node": "1.11.0"
+    "jasmine-node": "1.11.0",
+    "jshint": "2.1.11"
   },
   "engines": {
     "node": ">= 0.8.0"
   },
   "scripts": {
+    "pretest": "node_modules/jshint/bin/jshint -c .jshintrc lib/ spec/ index.js",
     "test": "node_modules/jasmine-node/bin/jasmine-node --verbose spec/"
   }
 }

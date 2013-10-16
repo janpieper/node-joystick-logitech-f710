@@ -1,3 +1,5 @@
+"use strict";
+
 var Joystick = require("../index")
   , fs = require("fs")
   , os = require("os")
