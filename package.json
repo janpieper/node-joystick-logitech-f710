@@ -1,0 +1,31 @@
+{
+  "name": "joystick-logitech-f710",
+  "version": "0.1.0",
+  "description": "Node.js module to read joystick data from Logitech Gamepad F710",
+  "keywords": [ "logitech", "gamepad", "f710", "joystick" ],
+  "homepage": "https://github.com/janpieper/node-joystick-logitech-f710",
+  "author": {
+    "name": "Jan Pieper",
+    "email": "kontakt@jan-pieper.info",
+    "url": "http://www.jan-pieper.info/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janpieper/node-joystick-logitech-f710.git"
+  },
+  "bugs": {
+    "url": "https://github.com/janpieper/node-joystick-logitech-f710/issues"
+  },
+  "license": {
+    "type": "Public Domain",
+    "url": "https://github.com/janpieper/node-joystick-logitech-f710/raw/master/UNLICENSE"
+  },
+  "main": "index",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-node": "1.11.0"
+  },
+  "scripts": {
+    "test": "node_modules/jasmine-node/bin/jasmine-node --verbose spec/"
+  }
+}
