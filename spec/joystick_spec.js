@@ -212,79 +212,79 @@ describe("Joystick", function () {
     describe("Sticks", function () {
       describe("Cross", function () {
         it("should emit 'stick:1:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:1:vertical:up", 43690, "00|00|00|00|AA|AA|02|01");
+          expectEventWithValueOnInput("stick:1:vertical:up", 43690, "00|00|00|00|AA|AA|02|05");
         });
 
         it("should emit 'stick:1:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:1:vertical:zero", 0, "00|00|00|00|00|00|02|01");
+          expectEventWithValueOnInput("stick:1:vertical:zero", 0, "00|00|00|00|00|00|02|05");
         });
 
         it("should emit 'stick:1:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:1:vertical:down", 2570, "00|00|00|00|0A|0A|02|01");
+          expectEventWithValueOnInput("stick:1:vertical:down", 2570, "00|00|00|00|0A|0A|02|05");
         });
 
         it("should emit 'stick:1:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:right", 2570, "00|00|00|00|0A|0A|02|00");
+          expectEventWithValueOnInput("stick:1:horizontal:right", 2570, "00|00|00|00|0A|0A|02|04");
         });
 
         it("should emit 'stick:1:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:zero", 0, "00|00|00|00|00|00|02|00");
+          expectEventWithValueOnInput("stick:1:horizontal:zero", 0, "00|00|00|00|00|00|02|04");
         });
 
         it("should emit 'stick:1:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:left", 43690, "00|00|00|00|AA|AA|02|00");
+          expectEventWithValueOnInput("stick:1:horizontal:left", 43690, "00|00|00|00|AA|AA|02|04");
         });
       });
 
       describe("Left", function () {
         it("should emit 'stick:2:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:2:vertical:up", 43690, "00|00|00|00|AA|AA|02|03");
+          expectEventWithValueOnInput("stick:2:vertical:up", 43690, "00|00|00|00|AA|AA|02|01");
         });
 
         it("should emit 'stick:2:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:2:vertical:zero", 0, "00|00|00|00|00|00|02|03");
+          expectEventWithValueOnInput("stick:2:vertical:zero", 0, "00|00|00|00|00|00|02|01");
         });
 
         it("should emit 'stick:2:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:2:vertical:down", 2570, "00|00|00|00|0A|0A|02|03");
+          expectEventWithValueOnInput("stick:2:vertical:down", 2570, "00|00|00|00|0A|0A|02|01");
         });
 
         it("should emit 'stick:2:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:right", 2570, "00|00|00|00|0A|0A|02|02");
+          expectEventWithValueOnInput("stick:2:horizontal:right", 2570, "00|00|00|00|0A|0A|02|00");
         });
 
         it("should emit 'stick:2:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:zero", 0, "00|00|00|00|00|00|02|02");
+          expectEventWithValueOnInput("stick:2:horizontal:zero", 0, "00|00|00|00|00|00|02|00");
         });
 
         it("should emit 'stick:2:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:left", 43690, "00|00|00|00|AA|AA|02|02");
+          expectEventWithValueOnInput("stick:2:horizontal:left", 43690, "00|00|00|00|AA|AA|02|00");
         });
       });
 
       describe("Right", function () {
         it("should emit 'stick:3:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:3:vertical:up", 43690, "00|00|00|00|AA|AA|02|05");
+          expectEventWithValueOnInput("stick:3:vertical:up", 43690, "00|00|00|00|AA|AA|02|03");
         });
 
         it("should emit 'stick:3:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:3:vertical:zero", 0, "00|00|00|00|00|00|02|05");
+          expectEventWithValueOnInput("stick:3:vertical:zero", 0, "00|00|00|00|00|00|02|03");
         });
 
         it("should emit 'stick:3:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:3:vertical:down", 2570, "00|00|00|00|0A|0A|02|05");
+          expectEventWithValueOnInput("stick:3:vertical:down", 2570, "00|00|00|00|0A|0A|02|03");
         });
 
         it("should emit 'stick:3:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:right", 2570, "00|00|00|00|0A|0A|02|04");
+          expectEventWithValueOnInput("stick:3:horizontal:right", 2570, "00|00|00|00|0A|0A|02|02");
         });
 
         it("should emit 'stick:3:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:zero", 0, "00|00|00|00|00|00|02|04");
+          expectEventWithValueOnInput("stick:3:horizontal:zero", 0, "00|00|00|00|00|00|02|02");
         });
 
         it("should emit 'stick:3:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:left", 43690, "00|00|00|00|AA|AA|02|04");
+          expectEventWithValueOnInput("stick:3:horizontal:left", 43690, "00|00|00|00|AA|AA|02|02");
         });
       });
     });
