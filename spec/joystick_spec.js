@@ -1,6 +1,7 @@
 var Joystick = require("../index")
   , fs = require("fs")
-  , INPUT_FILE = "/tmp/dev-input-js0";
+  , os = require("os")
+  , INPUT_FILE = os.tmpDir() + "/dev-input-js0";
 
 describe("Joystick", function () {
   describe("Creation", function () {
