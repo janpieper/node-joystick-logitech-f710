@@ -1,6 +1,6 @@
 {
   "name": "joystick-logitech-f710",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Node.js module to read joystick data from Logitech Gamepad F710",
   "keywords": [ "logitech", "gamepad", "f710", "joystick" ],
   "homepage": "https://github.com/janpieper/node-joystick-logitech-f710",
