@@ -107,11 +107,21 @@ joystick.on("button:start:press", function () {
 Each of these events will be emitted with the current stick position. Possible
 position values:
 
-* `*:up` = 32768..65535
+* `*:up` = 1..32767
 * `*:down` = 1..32767
 * `*:right` = 1..32767
-* `*:left` = 32768..65535
+* `*:left` = 1..32767
 * `*:zero` = 0
+
+This should help to understand what values you can expect:
+
+````
+       32767
+         |
+32767 -- 0 -- 32767
+         |
+       32767
+````
 
 #### Example
 

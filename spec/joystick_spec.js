@@ -212,7 +212,7 @@ describe("Joystick", function () {
     describe("Sticks", function () {
       describe("Cross", function () {
         it("should emit 'stick:1:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:1:vertical:up", 43690, "00|00|00|00|AA|AA|02|05");
+          expectEventWithValueOnInput("stick:1:vertical:up", 21846, "00|00|00|00|AA|AA|02|05");
         });
 
         it("should emit 'stick:1:vertical:zero' if vertically released", function () {
@@ -232,13 +232,13 @@ describe("Joystick", function () {
         });
 
         it("should emit 'stick:1:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:left", 43690, "00|00|00|00|AA|AA|02|04");
+          expectEventWithValueOnInput("stick:1:horizontal:left", 21846, "00|00|00|00|AA|AA|02|04");
         });
       });
 
       describe("Left", function () {
         it("should emit 'stick:2:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:2:vertical:up", 43690, "00|00|00|00|AA|AA|02|01");
+          expectEventWithValueOnInput("stick:2:vertical:up", 21846, "00|00|00|00|AA|AA|02|01");
         });
 
         it("should emit 'stick:2:vertical:zero' if vertically released", function () {
@@ -258,13 +258,13 @@ describe("Joystick", function () {
         });
 
         it("should emit 'stick:2:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:left", 43690, "00|00|00|00|AA|AA|02|00");
+          expectEventWithValueOnInput("stick:2:horizontal:left", 21846, "00|00|00|00|AA|AA|02|00");
         });
       });
 
       describe("Right", function () {
         it("should emit 'stick:3:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:3:vertical:up", 43690, "00|00|00|00|AA|AA|02|03");
+          expectEventWithValueOnInput("stick:3:vertical:up", 21846, "00|00|00|00|AA|AA|02|03");
         });
 
         it("should emit 'stick:3:vertical:zero' if vertically released", function () {
@@ -284,7 +284,7 @@ describe("Joystick", function () {
         });
 
         it("should emit 'stick:3:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:left", 43690, "00|00|00|00|AA|AA|02|02");
+          expectEventWithValueOnInput("stick:3:horizontal:left", 21846, "00|00|00|00|AA|AA|02|02");
         });
       });
     });
