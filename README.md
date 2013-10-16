@@ -3,6 +3,7 @@
 Node.js module to read joystick data from [Logitech Gamepad F710](http://gaming.logitech.com/en-us/product/f710-wireless-gamepad).
 
 [![Build Status](https://secure.travis-ci.org/janpieper/node-joystick-logitech-f710.png?branch=master)](http://travis-ci.org/janpieper/node-joystick-logitech-f710)
+[![NPM version](https://badge.fury.io/js/joystick-logitech-f710.png)](http://badge.fury.io/js/joystick-logitech-f710)
 
 ## Installation
 
