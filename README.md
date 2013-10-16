@@ -96,7 +96,7 @@ joystick.on("button:start:press", function () {
   * `stick:2:horizontal:right`
   * `stick:2:horizontal:left`
   * `stick:2:horizontal:zero`
-* Right Right
+* Right Stick
   * `stick:3:vertical:up`
   * `stick:3:vertical:down`
   * `stick:3:vertical:zero`
