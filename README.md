@@ -105,7 +105,7 @@ joystick.on("button:start:press", function () {
   * `stick:3:horizontal:zero`
 
 Each of these events will be emitted with the current stick position. Possible
-position values:
+position values (unscaled):
 
 * `*:up` = 1..32767
 * `*:down` = 1..32767
@@ -123,6 +123,22 @@ This should help to understand what values you can expect:
        32767
 ````
 
+You can scale the maximum axes position to a value between 1 and 32767:
+
+````javascript
+joystick.setMaximumAxesPosition(100);
+````
+
+Now you can expect the following position values:
+
+````
+        100
+         |
+  100 -- 0 -- 100
+         |
+        100
+````
+
 #### Example
 
 ````javascript
@@ -133,6 +149,5 @@ joystick.on("stick:1:vertical:up", function (position) {
 
 ## TODOs
 
-* Scale original position values (e.g. `0..65535` to `0..100`)
 * Identify stick switch after pressing "Select" button to have more specific event names
 * Trigger gamepad vibration
