@@ -40,6 +40,58 @@ describe("Joystick", function () {
     });
   });
 
+  describe("Position Scaling", function () {
+    var joystick;
+
+    beforeEach(function () {
+      joystick = undefined;
+      Joystick.create(INPUT_FILE, function (_, j) {
+        joystick = j;
+      });
+
+      waitsFor(function () {
+        return !!joystick;
+      });
+    });
+
+    afterEach(function () {
+      joystick.close();
+    });
+
+    it("should throw an Error if given maximum is no valid integer value", function () {
+      expect(function () {
+        joystick.setMaximumAxesPosition("non-numeric-value");
+      }).toThrow(
+        "Given maximum axes position 'non-numeric-value' is no valid " +
+        "integer value. It must be a value between 1 and 65535."
+      );
+    });
+
+    it("should throw an Error if given maximum is lower than 1", function () {
+      expect(function () {
+        joystick.setMaximumAxesPosition(-100);
+      }).toThrow(
+        "Cannot change maximum axes position to -100. The value must be " +
+        "greater than 1."
+      );
+    });
+
+    it("should throw an Error if maximum is greater than 65535", function () {
+      expect(function () {
+        joystick.setMaximumAxesPosition(100000);
+      }).toThrow(
+        "Cannot change maximum axes position to 100000. The possible " +
+        "maximum position is limited to 65535 by the joystick."
+      );
+    });
+
+    it("should successfully set maximum to 10000", function () {
+      expect(function () {
+        joystick.setMaximumAxesPosition(10000);
+      }).not.toThrow();
+    });
+  });
+
   describe("Events", function () {
     var joystick;
 
@@ -211,80 +263,176 @@ describe("Joystick", function () {
 
     describe("Sticks", function () {
       describe("Cross", function () {
-        it("should emit 'stick:1:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:1:vertical:up", 21846, "00|00|00|00|AA|AA|02|05");
+        describe("Standard Position", function () {
+          it("should emit 'stick:1:vertical:up' with position 21846 if pushed up", function () {
+            expectEventWithValueOnInput("stick:1:vertical:up", 21846, "00|00|00|00|AA|AA|02|05");
+          });
+
+          it("should emit 'stick:1:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:1:vertical:zero", 0, "00|00|00|00|00|00|02|05");
+          });
+
+          it("should emit 'stick:1:vertical:down' with position 2570 if pulled down", function () {
+            expectEventWithValueOnInput("stick:1:vertical:down", 2570, "00|00|00|00|0A|0A|02|05");
+          });
+
+          it("should emit 'stick:1:horizontal:right' with position 2570 if pushed right", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:right", 2570, "00|00|00|00|0A|0A|02|04");
+          });
+
+          it("should emit 'stick:1:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:zero", 0, "00|00|00|00|00|00|02|04");
+          });
+
+          it("should emit 'stick:1:horizontal:left' with position 21846 if pushed left", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:left", 21846, "00|00|00|00|AA|AA|02|04");
+          });
         });
 
-        it("should emit 'stick:1:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:1:vertical:zero", 0, "00|00|00|00|00|00|02|05");
-        });
+        describe("Scaled Position", function () {
+          beforeEach(function () {
+            joystick.setMaximumAxesPosition(100);
+          });
 
-        it("should emit 'stick:1:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:1:vertical:down", 2570, "00|00|00|00|0A|0A|02|05");
-        });
+          it("should emit 'stick:1:vertical:up' with position 67 if pushed up", function () {
+            expectEventWithValueOnInput("stick:1:vertical:up", 67, "00|00|00|00|AA|AA|02|05");
+          });
 
-        it("should emit 'stick:1:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:right", 2570, "00|00|00|00|0A|0A|02|04");
-        });
+          it("should emit 'stick:1:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:1:vertical:zero", 0, "00|00|00|00|00|00|02|05");
+          });
 
-        it("should emit 'stick:1:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:zero", 0, "00|00|00|00|00|00|02|04");
-        });
+          it("should emit 'stick:1:vertical:down' with position 8 if pulled down", function () {
+            expectEventWithValueOnInput("stick:1:vertical:down", 8, "00|00|00|00|0A|0A|02|05");
+          });
 
-        it("should emit 'stick:1:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:1:horizontal:left", 21846, "00|00|00|00|AA|AA|02|04");
+          it("should emit 'stick:1:horizontal:right' with position 8 if pushed right", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:right", 8, "00|00|00|00|0A|0A|02|04");
+          });
+
+          it("should emit 'stick:1:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:zero", 0, "00|00|00|00|00|00|02|04");
+          });
+
+          it("should emit 'stick:1:horizontal:left' with position 67 if pushed left", function () {
+            expectEventWithValueOnInput("stick:1:horizontal:left", 67, "00|00|00|00|AA|AA|02|04");
+          });
         });
       });
 
       describe("Left", function () {
-        it("should emit 'stick:2:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:2:vertical:up", 21846, "00|00|00|00|AA|AA|02|01");
+        describe("Standard Position", function () {
+          it("should emit 'stick:2:vertical:up' with position 21846 if pushed up", function () {
+            expectEventWithValueOnInput("stick:2:vertical:up", 21846, "00|00|00|00|AA|AA|02|01");
+          });
+
+          it("should emit 'stick:2:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:2:vertical:zero", 0, "00|00|00|00|00|00|02|01");
+          });
+
+          it("should emit 'stick:2:vertical:down' with position 2570 if pulled down", function () {
+            expectEventWithValueOnInput("stick:2:vertical:down", 2570, "00|00|00|00|0A|0A|02|01");
+          });
+
+          it("should emit 'stick:2:horizontal:right' with position 2570 if pushed right", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:right", 2570, "00|00|00|00|0A|0A|02|00");
+          });
+
+          it("should emit 'stick:2:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:zero", 0, "00|00|00|00|00|00|02|00");
+          });
+
+          it("should emit 'stick:2:horizontal:left' with position 21846 if pushed left", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:left", 21846, "00|00|00|00|AA|AA|02|00");
+          });
         });
 
-        it("should emit 'stick:2:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:2:vertical:zero", 0, "00|00|00|00|00|00|02|01");
-        });
+        describe("Scaled Position", function () {
+          beforeEach(function () {
+            joystick.setMaximumAxesPosition(100);
+          });
 
-        it("should emit 'stick:2:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:2:vertical:down", 2570, "00|00|00|00|0A|0A|02|01");
-        });
+          it("should emit 'stick:2:vertical:up' with position 67 if pushed up", function () {
+            expectEventWithValueOnInput("stick:2:vertical:up", 67, "00|00|00|00|AA|AA|02|01");
+          });
 
-        it("should emit 'stick:2:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:right", 2570, "00|00|00|00|0A|0A|02|00");
-        });
+          it("should emit 'stick:2:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:2:vertical:zero", 0, "00|00|00|00|00|00|02|01");
+          });
 
-        it("should emit 'stick:2:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:zero", 0, "00|00|00|00|00|00|02|00");
-        });
+          it("should emit 'stick:2:vertical:down' with position 8 if pulled down", function () {
+            expectEventWithValueOnInput("stick:2:vertical:down", 8, "00|00|00|00|0A|0A|02|01");
+          });
 
-        it("should emit 'stick:2:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:2:horizontal:left", 21846, "00|00|00|00|AA|AA|02|00");
+          it("should emit 'stick:2:horizontal:right' with position 8 if pushed right", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:right", 8, "00|00|00|00|0A|0A|02|00");
+          });
+
+          it("should emit 'stick:2:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:zero", 0, "00|00|00|00|00|00|02|00");
+          });
+
+          it("should emit 'stick:2:horizontal:left' with position 67 if pushed left", function () {
+            expectEventWithValueOnInput("stick:2:horizontal:left", 67, "00|00|00|00|AA|AA|02|00");
+          });
         });
       });
 
       describe("Right", function () {
-        it("should emit 'stick:3:vertical:up' if pushed up", function () {
-          expectEventWithValueOnInput("stick:3:vertical:up", 21846, "00|00|00|00|AA|AA|02|03");
+        describe("Standard Position", function () {
+          it("should emit 'stick:3:vertical:up' with position 21846 if pushed up", function () {
+            expectEventWithValueOnInput("stick:3:vertical:up", 21846, "00|00|00|00|AA|AA|02|03");
+          });
+
+          it("should emit 'stick:3:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:3:vertical:zero", 0, "00|00|00|00|00|00|02|03");
+          });
+
+          it("should emit 'stick:3:vertical:down' with position 2570 if pulled down", function () {
+            expectEventWithValueOnInput("stick:3:vertical:down", 2570, "00|00|00|00|0A|0A|02|03");
+          });
+
+          it("should emit 'stick:3:horizontal:right' with position 2570 if pushed right", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:right", 2570, "00|00|00|00|0A|0A|02|02");
+          });
+
+          it("should emit 'stick:3:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:zero", 0, "00|00|00|00|00|00|02|02");
+          });
+
+          it("should emit 'stick:3:horizontal:left' with position 21846 if pushed left", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:left", 21846, "00|00|00|00|AA|AA|02|02");
+          });
         });
 
-        it("should emit 'stick:3:vertical:zero' if vertically released", function () {
-          expectEventWithValueOnInput("stick:3:vertical:zero", 0, "00|00|00|00|00|00|02|03");
-        });
+        describe("Scaled Position", function () {
+          beforeEach(function () {
+            joystick.setMaximumAxesPosition(100);
+          });
 
-        it("should emit 'stick:3:vertical:down' if pulled down", function () {
-          expectEventWithValueOnInput("stick:3:vertical:down", 2570, "00|00|00|00|0A|0A|02|03");
-        });
+          it("should emit 'stick:3:vertical:up' with position 67 if pushed up", function () {
+            expectEventWithValueOnInput("stick:3:vertical:up", 67, "00|00|00|00|AA|AA|02|03");
+          });
 
-        it("should emit 'stick:3:horizontal:right' if pushed right", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:right", 2570, "00|00|00|00|0A|0A|02|02");
-        });
+          it("should emit 'stick:3:vertical:zero' with position 0 if vertically released", function () {
+            expectEventWithValueOnInput("stick:3:vertical:zero", 0, "00|00|00|00|00|00|02|03");
+          });
 
-        it("should emit 'stick:3:horizontal:zero' if horizontally released", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:zero", 0, "00|00|00|00|00|00|02|02");
-        });
+          it("should emit 'stick:3:vertical:down' with position 8 if pulled down", function () {
+            expectEventWithValueOnInput("stick:3:vertical:down", 8, "00|00|00|00|0A|0A|02|03");
+          });
 
-        it("should emit 'stick:3:horizontal:left' if pushed left", function () {
-          expectEventWithValueOnInput("stick:3:horizontal:left", 21846, "00|00|00|00|AA|AA|02|02");
+          it("should emit 'stick:3:horizontal:right' with position 8 if pushed right", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:right", 8, "00|00|00|00|0A|0A|02|02");
+          });
+
+          it("should emit 'stick:3:horizontal:zero' with position 0 if horizontally released", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:zero", 0, "00|00|00|00|00|00|02|02");
+          });
+
+          it("should emit 'stick:3:horizontal:left' with position 67 if pushed left", function () {
+            expectEventWithValueOnInput("stick:3:horizontal:left", 67, "00|00|00|00|AA|AA|02|02");
+          });
         });
       });
     });
