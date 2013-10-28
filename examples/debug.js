@@ -5,6 +5,10 @@ Joystick.create("/dev/input/js0", function (err, joystick) {
     console.log("ERROR", err);
   }
 
+  joystick.on("close", function () {
+    console.log("Closed joystick");
+  });
+
   // Button A
 
   joystick.on("button:a:press", function () {
