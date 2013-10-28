@@ -3,7 +3,8 @@
 var Joystick = require("../index")
   , fs = require("fs")
   , os = require("os")
-  , INPUT_FILE = os.tmpDir() + "/dev-input-js0";
+  , INPUT_FILE = os.tmpDir() + "/dev-input-js0"
+  , DEFAULT_INPUT_MODE = "xinput";
 
 describe("Joystick", function () {
   describe("Creation", function () {
@@ -14,7 +15,7 @@ describe("Joystick", function () {
     });
 
     it("should call callback with an error if input device does not exist", function () {
-      Joystick.create("not-existent", cb);
+      Joystick.create("not-existent", DEFAULT_INPUT_MODE, cb);
 
       waitsFor(function () {
         return cb.wasCalled;
@@ -27,7 +28,7 @@ describe("Joystick", function () {
 
     it("should call callback with no error and an instance of Joystick", function () {
       fs.writeFileSync(INPUT_FILE, "dummy");
-      Joystick.create(INPUT_FILE, cb);
+      Joystick.create(INPUT_FILE, DEFAULT_INPUT_MODE, cb);
 
       waitsFor(function () {
         return cb.wasCalled;
@@ -45,7 +46,7 @@ describe("Joystick", function () {
 
     beforeEach(function () {
       joystick = undefined;
-      Joystick.create(INPUT_FILE, function (_, j) {
+      Joystick.create(INPUT_FILE, DEFAULT_INPUT_MODE, function (_, j) {
         joystick = j;
       });
 
@@ -101,7 +102,7 @@ describe("Joystick", function () {
     }
 
     function ensureInputFileExist() {
-      fs.writeFileSync(INPUT_FILE, new Buffer("0000000000000000", "hex"));
+      fs.writeFileSync(INPUT_FILE, new Buffer("", "hex"));
     }
 
     function spyOnEventAndSimulateInputData(eventName, inputData) {
@@ -126,7 +127,7 @@ describe("Joystick", function () {
       ensureInputFileExist();
 
       joystick = undefined;
-      Joystick.create(INPUT_FILE, function (_, j) {
+      Joystick.create(INPUT_FILE, DEFAULT_INPUT_MODE, function (_, j) {
         joystick = j;
       });
 
