@@ -9,7 +9,7 @@ Node.js module to read joystick data from [Logitech Gamepad F710](http://gaming.
 
 ### Using NPM
 
-`npm install node-joystick-logitech-f710`
+`npm install joystick-logitech-f710`
 
 ## Example
 
